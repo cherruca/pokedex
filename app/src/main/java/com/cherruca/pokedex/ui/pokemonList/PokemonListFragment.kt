@@ -10,10 +10,6 @@ import com.cherruca.pokedex.R
 
 class PokemonListFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = PokemonListFragment()
-    }
-
     private val viewModel: PokemonListViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
