@@ -10,6 +10,18 @@
         android:name="com.cherruca.pokedex.ui.pokemonList.PokemonListFragment"
         android:label="fragment_pokedex"
         tools:layout="@layout/fragment_pokemon_list" >
+        <action
+            android:id="@+id/action_pokemon_list_fragment_to_pokemonDetailFragment"
+            app:destination="@id/pokemonDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pokemonDetailFragment"
+        android:name="com.cherruca.pokedex.ui.pokemonDetail.PokemonDetailFragment"
+        android:label="fragment_pokemon_detail"
+        tools:layout="@layout/fragment_pokemon_detail">
+        <argument
+            android:name="pokemon_id"
+            app:argType="string" />
     </fragment>
 
 </navigation>

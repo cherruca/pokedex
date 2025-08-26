@@ -5,15 +5,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import com.cherruca.pokedex.R
 import androidx.recyclerview.widget.RecyclerView
 import com.cherruca.pokedex.domain.model.PokemonUI
 import coil.load
+import com.google.android.material.card.MaterialCardView
 
 class PokemonListAdapter(private val pokemonList: MutableSet<PokemonUI>) : RecyclerView.Adapter<PokemonListAdapter.PokemonListViewHolder>() {
     class PokemonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val pokemonName: TextView = itemView.findViewById(R.id.pokecard_name)
         val pokemonSprite: ImageView = itemView.findViewById(R.id.pokecard_sprite)
+        val pokemonCard: MaterialCardView = itemView.findViewById(R.id.pokecard)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PokemonListViewHolder {
@@ -28,6 +31,11 @@ class PokemonListAdapter(private val pokemonList: MutableSet<PokemonUI>) : Recyc
             crossfade(true)
             placeholder(R.drawable.rounded_downloading)
             error(R.drawable.rounded_error)
+        }
+        holder.pokemonCard.setOnClickListener {
+            it.findNavController().navigate(
+                PokemonListFragmentDirections.actionPokemonListFragmentToPokemonDetailFragment(pokemon.name)
+            )
         }
     }
 

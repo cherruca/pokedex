@@ -1,27 +1,28 @@
 package com.cherruca.pokedex.ui.pokemonDetail
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import com.cherruca.pokedex.R
+import com.cherruca.pokedex.databinding.FragmentPokemonDetailBinding
 
 class PokemonDetailFragment : Fragment() {
+    private lateinit var binding: FragmentPokemonDetailBinding
 
-    private val viewModel: PokemonDetailViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    private val viewModel: PokemonDetailViewModel by lazy {
+        ViewModelProvider(this)[PokemonDetailViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_pokemon_detail, container, false)
+        val args = PokemonDetailFragmentArgs.fromBundle(requireArguments())
+        binding = FragmentPokemonDetailBinding.inflate(inflater, container, false)
+        binding.txtDetail.text = args.pokemonId
+        return binding.root
     }
 }
