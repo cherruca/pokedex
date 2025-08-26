@@ -1,27 +1,39 @@
 package com.cherruca.pokedex.ui.pokemonList
 
-import androidx.fragment.app.viewModels
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.cherruca.pokedex.R
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cherruca.pokedex.databinding.FragmentPokemonListBinding
 
 class PokemonListFragment : Fragment() {
+    private lateinit var binding: FragmentPokemonListBinding
 
-    private val viewModel: PokemonListViewModel by viewModels()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // TODO: Use the ViewModel
+    private val viewModel: PokemonListViewModel by lazy {
+        ViewModelProvider(this)[PokemonListViewModel::class.java]
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.fragment_pokemon_list, container, false)
+        binding = FragmentPokemonListBinding.inflate(inflater)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val layoutManager = LinearLayoutManager(context)
+        binding.recyclerviewPokemonlist.layoutManager = layoutManager
+        viewModel.pokemonDetail.observe(viewLifecycleOwner) { response ->
+            binding.recyclerviewPokemonlist.adapter = PokemonListAdapter(viewModel.pokemonUIRepository.pokemonUIList)
+            Log.d("FRAGMENT", viewModel.pokemonUIRepository.pokemonUIList.size.toString())
+        }
     }
 }
