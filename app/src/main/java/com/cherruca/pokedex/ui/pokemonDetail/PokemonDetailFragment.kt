@@ -6,8 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
-import com.cherruca.pokedex.R
 import com.cherruca.pokedex.databinding.FragmentPokemonDetailBinding
+import coil.load
+import com.cherruca.pokedex.R
 
 class PokemonDetailFragment : Fragment() {
     private lateinit var binding: FragmentPokemonDetailBinding
@@ -20,9 +21,21 @@ class PokemonDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val args = PokemonDetailFragmentArgs.fromBundle(requireArguments())
         binding = FragmentPokemonDetailBinding.inflate(inflater, container, false)
-        binding.txtDetail.text = args.pokemonId
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val args = PokemonDetailFragmentArgs.fromBundle(requireArguments())
+        viewModel.getPokemonDetail(args.pokemonId)
+        viewModel.pokemonDetail.observe(viewLifecycleOwner) { response ->
+            binding.txtDetail.text = viewModel.pokemonDetail.value?.name
+            binding.imgDetail.load(viewModel.pokemonDetail.value?.sprites?.frontDefault) {
+                crossfade(true)
+                placeholder(R.drawable.rounded_downloading)
+                error(R.drawable.rounded_error)
+            }
+        }
     }
 }
