@@ -31,6 +31,7 @@ class PokemonListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val layoutManager = LinearLayoutManager(context)
         binding.recyclerviewPokemonlist.layoutManager = layoutManager
+        viewModel.getPokemons(viewModel.offset)
         viewModel.pokemonDetail.observe(viewLifecycleOwner) { response ->
             binding.recyclerviewPokemonlist.adapter = PokemonListAdapter(viewModel.pokemonUIRepository.pokemonUIList)
             Log.d("FRAGMENT", viewModel.pokemonUIRepository.pokemonUIList.size.toString())

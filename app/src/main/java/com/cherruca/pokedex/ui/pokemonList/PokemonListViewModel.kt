@@ -20,10 +20,6 @@ class PokemonListViewModel : ViewModel() {
     val pokemonUIRepository = PokemonUIRepositoryImp()
     var offset: Int = 0
 
-    init {
-        getPokemons(offset)
-    }
-
     fun getPokemons(start: Int) {
         viewModelScope.launch {
             try {
