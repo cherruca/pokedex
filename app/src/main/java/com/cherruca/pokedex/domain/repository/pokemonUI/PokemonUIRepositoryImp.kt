@@ -1,6 +1,5 @@
 package com.cherruca.pokedex.domain.repository.pokemonUI
 
-import android.util.Log
 import com.cherruca.pokedex.domain.model.PokemonDetailResponse
 import com.cherruca.pokedex.domain.model.PokemonUI
 
@@ -17,7 +16,6 @@ class PokemonUIRepositoryImp: PokemonUIRepository {
 
         if (newPokemonUI != null) {
             pokemonUIList.add(newPokemonUI)
-            Log.d("ADDITION", newPokemonUI.name)
         }
     }
 

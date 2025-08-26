@@ -27,7 +27,6 @@ class PokemonListViewModel : ViewModel() {
                 _pokemonList.value?.results?.forEach { pokemonResult ->
                     _pokemonDetail.value = PokeApi.retrofitService.getPokemonDetail(pokemonResult.name)
                     pokemonUIRepository.addPokemon(pokemonDetail.value)
-                    Log.d("POKEDEX", pokemonDetail.value?.name.toString())
                 }
             } catch (e: Exception) {
                 _pokemonList.value = null
